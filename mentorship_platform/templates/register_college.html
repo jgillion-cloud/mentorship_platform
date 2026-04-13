@@ -1,0 +1,618 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <h2 class="text-center mb-4">College Student Registration</h2>
+        
+        <!-- EXPLANATION: This form collects ALL profile data in one step
+             No two-step process - simpler for users -->
+        <form method="post">
+            
+            <!-- ========================================
+                 SECTION: Account Information
+                 ======================================== -->
+            <h4 class="mt-4">Account Information</h4>
+            <hr>
+            
+            <div class="mb-3">
+                <label for="email" class="form-label">College Email *</label>
+                <!-- EXPLANATION: type="email" provides browser validation for email format
+                     required attribute makes this field mandatory -->
+                <input type="email" class="form-control" id="email" name="email" 
+                       placeholder="yourname@university.edu" required>
+                <small class="form-text text-muted">
+                    Must end with .edu (any college/university)
+                </small>
+            </div>
+            
+            <div class="mb-3">
+                <label for="password" class="form-label">Password *</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="confirmation" class="form-label">Confirm Password *</label>
+                <input type="password" class="form-control" id="confirmation" name="confirmation" required>
+            </div>
+            
+            <!-- ========================================
+                 SECTION: Basic Profile Information
+                 ======================================== -->
+            <h4 class="mt-4">Profile Information</h4>
+            <hr>
+            
+            <div class="mb-3">
+                <label for="first_name" class="form-label">First Name *</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name *</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="university" class="form-label">University *</label>
+                <!-- EXPLANATION: No placeholder text - user types their actual university
+                     We're not assuming Harvard anymore since this is for Philly alumni -->
+                <input type="text" class="form-control" id="university" name="university" 
+                       placeholder="University Name" required>
+                <small class="form-text text-muted">
+                    Enter the full name of your university
+                </small>
+            </div>
+            
+            <div class="mb-3">
+                <label for="high_school" class="form-label">High School (Optional)</label>
+                <!-- EXPLANATION: placeholder="Central High School" shows example
+                     Gray text disappears when user starts typing
+                     This gives users a hint about what format to use -->
+                <input type="text" class="form-control" id="high_school" name="high_school"
+                       placeholder="Central High School">
+                <small class="form-text text-muted">
+                    Which Philadelphia high school did you attend?
+                </small>
+            </div>
+            
+            <!-- ========================================
+                 SECTION: What Can You Help With?
+                 ======================================== -->
+            <h4 class="mt-4">What can you help with?</h4>
+            <hr>
+            <p class="text-muted">Select all areas where you can provide guidance</p>
+            
+            <!-- EXPLANATION: Checkboxes allow multiple selections
+                 name="help_areas" is the same for all - Python receives them as a list
+                 value is what gets sent to the server when checked -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="help_areas" 
+                               value="College Applications" id="help1">
+                        <label class="form-check-label" for="help1">
+                            College Applications
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="help_areas" 
+                               value="Understanding Financial Aid" id="help2">
+                        <label class="form-check-label" for="help2">
+                            Understanding Financial Aid
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="help_areas" 
+                               value="Scholarship Searching" id="help3">
+                        <label class="form-check-label" for="help3">
+                            Scholarship Searching
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="help_areas" 
+                               value="College Classes and Majors" id="help4">
+                        <label class="form-check-label" for="help4">
+                            College Classes and Majors
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="help_areas" 
+                               value="Exploring Universities" id="help5">
+                        <label class="form-check-label" for="help5">
+                            Exploring Universities
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="help_areas" 
+                               value="Deciding Between Universities" id="help6">
+                        <label class="form-check-label" for="help6">
+                            Deciding Between Universities
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="help_areas" 
+                               value="College Social Life" id="help7">
+                        <label class="form-check-label" for="help7">
+                            College Social Life
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ========================================
+                 SECTION: Academic Interests
+                 ======================================== -->
+            <h4 class="mt-4">Academic & Extracurricular Interests</h4>
+            <hr>
+            <p class="text-muted">
+                Select the academic interests and/or extracurricular fields you are exploring in college, 
+                or subjects you especially enjoyed in high school. Select all that apply.
+            </p>
+            
+            <!-- EXPLANATION: Multiple columns to organize the long list
+                 row and col-md-4 create a 3-column layout on medium+ screens -->
+            <div class="row">
+                <!-- Column 1: STEM -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">STEM</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Engineering / Robotics" id="int1">
+                        <label class="form-check-label" for="int1">Engineering / Robotics</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Mathematics" id="int2">
+                        <label class="form-check-label" for="int2">Mathematics</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Physics" id="int3">
+                        <label class="form-check-label" for="int3">Physics</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Computer Science" id="int4">
+                        <label class="form-check-label" for="int4">Computer Science</label>
+                    </div>
+                    
+                    <h6 class="fw-bold mt-3">Life Sciences</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Biology" id="int5">
+                        <label class="form-check-label" for="int5">Biology</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Chemistry" id="int6">
+                        <label class="form-check-label" for="int6">Chemistry</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Medicine / Pre-Health" id="int7">
+                        <label class="form-check-label" for="int7">Medicine / Pre-Health</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Environmental Science" id="int8">
+                        <label class="form-check-label" for="int8">Environmental Science</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Astronomy" id="int9">
+                        <label class="form-check-label" for="int9">Astronomy</label>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Social Sciences & Humanities -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Social Sciences</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Politics" id="int10">
+                        <label class="form-check-label" for="int10">Politics</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Journalism" id="int11">
+                        <label class="form-check-label" for="int11">Journalism</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Law" id="int12">
+                        <label class="form-check-label" for="int12">Law</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Debate/Mock Trial/Model UN" id="int13">
+                        <label class="form-check-label" for="int13">Debate/Mock Trial/Model UN</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Psychology" id="int14">
+                        <label class="form-check-label" for="int14">Psychology</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Sociology/Anthropology" id="int15">
+                        <label class="form-check-label" for="int15">Sociology/Anthropology</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Ethics/Philosophy" id="int16">
+                        <label class="form-check-label" for="int16">Ethics/Philosophy</label>
+                    </div>
+                    
+                    <h6 class="fw-bold mt-3">Arts</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Art" id="int17">
+                        <label class="form-check-label" for="int17">Art</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Music" id="int18">
+                        <label class="form-check-label" for="int18">Music</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Theater/Film" id="int19">
+                        <label class="form-check-label" for="int19">Theater/Film</label>
+                    </div>
+                </div>
+                
+                <!-- Column 3: Business & Other -->
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Business</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Business Management" id="int20">
+                        <label class="form-check-label" for="int20">Business Management</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Economics/Finance" id="int21">
+                        <label class="form-check-label" for="int21">Economics/Finance</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Marketing" id="int22">
+                        <label class="form-check-label" for="int22">Marketing</label>
+                    </div>
+                    
+                    <h6 class="fw-bold mt-3">Humanities</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="English Literature" id="int23">
+                        <label class="form-check-label" for="int23">English Literature</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="History" id="int24">
+                        <label class="form-check-label" for="int24">History</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Linguistics" id="int25">
+                        <label class="form-check-label" for="int25">Linguistics</label>
+                    </div>
+                    
+                    <h6 class="fw-bold mt-3">Other</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Education" id="int26">
+                        <label class="form-check-label" for="int26">Education</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Social Justice" id="int27">
+                        <label class="form-check-label" for="int27">Social Justice</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Non-Profit Work" id="int28">
+                        <label class="form-check-label" for="int28">Non-Profit Work</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="academic_interests" 
+                               value="Military Service" id="int29">
+                        <label class="form-check-label" for="int29">Military Service</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ========================================
+                 SECTION: Athletic Interests
+                 ======================================== -->
+            <h4 class="mt-4">Athletic & Physical Activities</h4>
+            <hr>
+            <p class="text-muted">
+                Select the athletic interests and/or physical activities you are exploring in college, 
+                or sports you especially enjoyed in high school. Select all that apply.
+            </p>
+            
+            <!-- EXPLANATION: NEW SECTION - athletic interests
+                 Stored separately from academic interests for better organization -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Basketball" id="sport1">
+                        <label class="form-check-label" for="sport1">Basketball</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Soccer" id="sport2">
+                        <label class="form-check-label" for="sport2">Soccer</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Volleyball" id="sport3">
+                        <label class="form-check-label" for="sport3">Volleyball</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Baseball" id="sport4">
+                        <label class="form-check-label" for="sport4">Baseball</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Softball" id="sport5">
+                        <label class="form-check-label" for="sport5">Softball</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Football" id="sport6">
+                        <label class="form-check-label" for="sport6">Football</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Lacrosse" id="sport7">
+                        <label class="form-check-label" for="sport7">Lacrosse</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Field Hockey" id="sport8">
+                        <label class="form-check-label" for="sport8">Field Hockey</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Ice Hockey" id="sport9">
+                        <label class="form-check-label" for="sport9">Ice Hockey</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Tennis" id="sport10">
+                        <label class="form-check-label" for="sport10">Tennis</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Badminton" id="sport11">
+                        <label class="form-check-label" for="sport11">Badminton</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Golf" id="sport12">
+                        <label class="form-check-label" for="sport12">Golf</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Track & Field/Cross Country" id="sport13">
+                        <label class="form-check-label" for="sport13">Track & Field/Cross Country</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Swimming" id="sport14">
+                        <label class="form-check-label" for="sport14">Swimming</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Crew" id="sport15">
+                        <label class="form-check-label" for="sport15">Crew</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Wrestling" id="sport16">
+                        <label class="form-check-label" for="sport16">Wrestling</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Martial Arts" id="sport17">
+                        <label class="form-check-label" for="sport17">Martial Arts</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Cheerleading/Gymnastics" id="sport18">
+                        <label class="form-check-label" for="sport18">Cheerleading/Gymnastics</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Dance" id="sport19">
+                        <label class="form-check-label" for="sport19">Dance</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="athletic_interests" 
+                               value="Ultimate Frisbee" id="sport20">
+                        <label class="form-check-label" for="sport20">Ultimate Frisbee</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ========================================
+                 SECTION: Demographics (OPTIONAL)
+                 ======================================== -->
+            <h4 class="mt-4">Demographics & Background (All Optional)</h4>
+            <hr>
+            <p class="text-muted">
+                <strong>Sharing this information is completely optional.</strong> 
+                These details help high school students find mentors with similar backgrounds or experiences. 
+                You can skip any fields you don't want to share.
+            </p>
+            
+            <!-- Gender -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Gender Identity (Optional)</label>
+                <!-- EXPLANATION: Checkboxes for gender allow multiple selections
+                     Some people identify with multiple gender identities -->
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="gender" 
+                           value="Woman" id="gender1">
+                    <label class="form-check-label" for="gender1">Woman</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="gender" 
+                           value="Man" id="gender2">
+                    <label class="form-check-label" for="gender2">Man</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="gender" 
+                           value="Nonbinary" id="gender3">
+                    <label class="form-check-label" for="gender3">Nonbinary</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="gender" 
+                           value="Transgender" id="gender4">
+                    <label class="form-check-label" for="gender4">Transgender</label>
+                </div>
+                <div class="form-check">
+                    <!-- EXPLANATION: This checkbox has an associated text input
+                         When checked, user can type their own gender identity -->
+                    <input class="form-check-input" type="checkbox" name="gender" 
+                           value="Other" id="gender5" 
+                           onclick="document.getElementById('gender_custom_input').disabled = !this.checked">
+                    <label class="form-check-label" for="gender5">
+                        Another gender identity (please specify):
+                    </label>
+                    <input type="text" class="form-control mt-2" id="gender_custom_input" 
+                           name="gender_custom" placeholder="Specify..." disabled>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="gender" 
+                           value="Prefer not to say" id="gender6">
+                    <label class="form-check-label" for="gender6">Prefer not to say</label>
+                </div>
+             <!-- Race/Ethnicity -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Race and/or Ethnicity (Optional - Select all that apply)</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="race" 
+                       value="Black or African American" id="race1">
+                <label class="form-check-label" for="race1">Black or African American</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="race" 
+                       value="Hispanic or Latino/a/x" id="race2">
+                <label class="form-check-label" for="race2">Hispanic or Latino/a/x</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="race" 
+                       value="Asian" id="race3">
+                <label class="form-check-label" for="race3">Asian</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="race" 
+                       value="White" id="race4">
+                <label class="form-check-label" for="race4">White</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="race" 
+                       value="American Indian or Alaska Native" id="race5">
+                <label class="form-check-label" for="race5">American Indian or Alaska Native</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="race" 
+                       value="Middle Eastern or North African" id="race6">
+                <label class="form-check-label" for="race6">Middle Eastern or North African</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="race" 
+                       value="1st/2nd Gen Immigrant" id="race7">
+                <label class="form-check-label" for="race7">1st/2nd Gen Immigrant</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="race" 
+                       value="Prefer not to say" id="race8">
+                <label class="form-check-label" for="race8">Prefer not to say</label>
+            </div>
+        </div>
+        
+        <!-- Boolean Fields -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Background & Experience (Optional)</label>
+            
+            <div class="form-check">
+                <!-- EXPLANATION: hbcu = Historically Black Colleges and Universities
+                     Important identifier for students seeking HBCU experience -->
+                <input type="checkbox" class="form-check-input" id="hbcu" name="hbcu">
+                <label class="form-check-label" for="hbcu">
+                    I attended an HBCU (Historically Black College/University)
+                </label>
+            </div>
+            
+            <div class="form-check">
+                <!-- EXPLANATION: IB = International Baccalaureate
+                     Rigorous high school program - students want mentors who did it -->
+                <input type="checkbox" class="form-check-input" id="ib" name="ib">
+                <label class="form-check-label" for="ib">
+                    I did the International Baccalaureate (IB) program in high school
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="university_outside_us" name="university_outside_us">
+                <label class="form-check-label" for="university_outside_us">
+                    I attend a university outside of the United States
+                </label>
+            </div>
+            
+            <div class="form-check">
+                <!-- EXPLANATION: Clarify this is about college athletics
+                     Not high school sports -->
+                <input type="checkbox" class="form-check-input" id="is_athlete" name="is_athlete">
+                <label class="form-check-label" for="is_athlete">
+                    I am a college athlete
+                </label>
+            </div>
+            
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="is_lgbtq" name="is_lgbtq">
+                <label class="form-check-label" for="is_lgbtq">
+                    I identify as LGBTQ+
+                </label>
+            </div>
+        </div>
+        
+        <!-- Religion -->
+        <div class="mb-3">
+            <label for="religion" class="form-label fw-bold">Religion (Optional)</label>
+            <!-- EXPLANATION: Dropdown (select) for single choice
+                 Empty value="" option allows "no selection" -->
+            <select class="form-select" id="religion" name="religion">
+                <option value="">Prefer not to say</option>
+                <option value="Christianity">Christianity</option>
+                <option value="Islam">Islam</option>
+                <option value="Hinduism">Hinduism</option>
+                <option value="Buddhism">Buddhism</option>
+                <option value="Judaism">Judaism</option>
+                <option value="Sikhism">Sikhism</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success w-100 mt-4 mb-3">Complete Registration</button>
+    </form>
+    
+    <p class="text-center mt-3">
+        Already have an account? <a href="/login?type=college">Login here</a>
+    </p>
+</div>
+</div>
+{% endblock %}
+```

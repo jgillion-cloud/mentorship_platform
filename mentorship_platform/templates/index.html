@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<!-- EXPLANATION: Adding custom styles just for the title, slogan, and footer
+     We keep everything else using the original Bootstrap classes -->
+<style>
+    /* EXPLANATION: Styling for "Tap In" title at the top */
+    .brand-title {
+        font-size: 4rem;              /* 4 * 16px = 64px - large but not overwhelming */
+        font-weight: 700;             /* Bold (700 on scale of 100-900) */
+        color: #000000;               /* Pure black for monochrome look */
+        margin-top: 30px;             /* Space above title */
+        margin-bottom: 10px;          /* Small space below title */
+        text-align: center;           /* Center the text horizontally */
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        /* EXPLANATION of this font stack:
+           -apple-system = Uses Apple's system font on Mac/iOS (San Francisco)
+           BlinkMacSystemFont = Chrome's system font rendering
+           Segoe UI = Windows modern font
+           Roboto = Android system font
+           Helvetica Neue = Fallback clean font
+           This gives a modern, native look on any device */
+        letter-spacing: -1px;         /* Tighten letters slightly for modern look */
+        /* EXPLANATION: Negative letter-spacing makes text more compact
+           Common in modern design (like Apple's style) */
+    }
+    
+    /* EXPLANATION: Styling for the slogan */
+    .brand-slogan {
+        font-size: 1rem;              /* Standard size (16px) */
+        color: #495057;               /* Dark gray (not pure black) */
+        margin-bottom: 40px;          /* Space before the two-column section */
+        text-align: center;           /* Center the text */
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        /* Same modern font stack as title */
+        font-weight: 400;             /* Normal weight */
+        max-width: 600px;             /* Limit width so text doesn't stretch too wide */
+        margin-left: auto;            /* These two lines center the slogan container */
+        margin-right: auto;
+        /* EXPLANATION of centering with auto margins:
+           max-width limits the width
+           margin-left: auto and margin-right: auto center it horizontally
+           This is a classic CSS centering technique */
+    }
+    
+    /* EXPLANATION: Easter egg footer styling */
+    .landing-footer {
+        margin-top: 80px;             /* Large space above footer */
+        text-align: center;           /* Center the text */
+        font-size: 0.75rem;           /* Very small (12px) */
+        color: #adb5bd;               /* Light gray - subtle */
+        font-family: 'Comic Sans MS', cursive, sans-serif;  /* Fun, playful font */
+        /* EXPLANATION: Comic Sans is often considered unprofessional
+           But it's perfect for Easter eggs - shows humor and personality
+           It's so "bad" that it's ironically perfect for this reference */
+        padding-bottom: 30px;         /* Space at bottom of page */
+    }
+    
+    /* EXPLANATION: Link styling in the footer */
+    .landing-footer a {
+        color: #adb5bd;               /* Same light gray as footer text */
+        text-decoration: none;        /* No underline by default */
+        transition: color 0.3s ease;  /* Smooth color change on hover */
+        /* EXPLANATION of transition:
+           When color changes (on hover), animate it smoothly over 0.3 seconds
+           "ease" makes it start slow, speed up, then slow down */
+    }
+    
+    /* EXPLANATION: Hover effect for the Easter egg link */
+    .landing-footer a:hover {
+        color: #6c757d;               /* Darker gray on hover */
+        text-decoration: underline;   /* Underline appears */
+        /* This subtle change shows it's clickable without being obvious */
+    }
+    
+    /* EXPLANATION: Responsive design for mobile devices */
+    @media (max-width: 768px) {
+        /* These styles only apply on screens 768px or smaller (phones/tablets) */
+        
+        .brand-title {
+            font-size: 2.5rem;        /* Smaller title on mobile (64px → 40px) */
+            margin-top: 20px;         /* Less space on mobile */
+        }
+        
+        .brand-slogan {
+            font-size: 0.9rem;        /* Slightly smaller on mobile */
+            padding: 0 20px;          /* Add side padding so text doesn't touch edges */
+        }
+    }
+</style>
+
+<!-- Brand title "Tap In" at the top -->
+<h1 class="brand-title">Tap In</h1>
+
+<!-- Slogan under title -->
+<p class="brand-slogan">the digital networking tool to link high school students to college students</p>
+
+<!-- EXPLANATION: Original two-column layout from before
+     row = Bootstrap class for horizontal layout
+     text-center = centers text
+     mt-5 = margin-top size 5 (large top margin) -->
+<div class="row text-center mt-5">
+    <!-- Left column: High School Students -->
+    <!-- EXPLANATION: col-md-6 = 6 out of 12 columns (50% width on medium+ screens)
+         border-end = Bootstrap class for right border to separate columns -->
+    <div class="col-md-6 border-end">
+        <h2>High School Student Seeking Advice</h2>
+        <!-- text-muted = Bootstrap class for gray text (de-emphasizes text) -->
+        <p class="text-muted">Connect with college mentors</p>
+        
+        <!-- Button container -->
+        <div class="mt-4">
+            <!-- EXPLANATION: btn btn-primary = Bootstrap button classes
+                 btn-lg = large button size
+                 m-2 = margin size 2 on all sides (spacing between buttons) -->
+            <a href="/login?type=highschool" class="btn btn-primary btn-lg m-2">Login</a>
+            <!-- btn-outline-primary = outline style (border but no fill) -->
+            <a href="/register_hs" class="btn btn-outline-primary btn-lg m-2">Register</a>
+        </div>
+    </div>
+    
+    <!-- Right column: College Students -->
+    <div class="col-md-6">
+        <h2>College Student Looking to Mentor</h2>
+        <p class="text-muted">Help guide high school students</p>
+        
+        <div class="mt-4">
+            <!-- btn-success = Bootstrap's green button style -->
+            <a href="/login?type=college" class="btn btn-success btn-lg m-2">Login</a>
+            <a href="/register_college" class="btn btn-outline-success btn-lg m-2">Register</a>
+        </div>
+    </div>
+</div>
+
+<!-- Easter egg footer -->
+<div class="landing-footer">
+    <!-- EXPLANATION: target="_blank" opens link in new tab
+         This is important so users don't navigate away from your site
+         The new tab preserves your site while they enjoy the video -->
+    <a href="https://www.youtube.com/watch?v=jUIrolORx6M" target="_blank">
+        Tap In in Saweetie Here
+    </a>
+</div>
+{% endblock %}

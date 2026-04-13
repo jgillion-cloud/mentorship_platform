@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container text-center mt-5">
+    <!-- EXPLANATION OF text-center and mt-5:
+         text-center = Bootstrap class that centers text horizontally
+         mt-5 = margin-top size 5 (large top margin)
+         Bootstrap has spacing utilities: m/p (margin/padding) + t/b/l/r/x/y (top/bottom/left/right/horizontal/vertical) + 0-5 (size) -->
+    
+    <h1 class="display-1">404</h1>
+    <!-- display-1 is Bootstrap's largest heading style -->
+    
+    <p class="lead">Oops! The page you're looking for doesn't exist.</p>
+    <!-- lead class makes text larger and lighter (good for subtitles) -->
+    
+    <div class="mt-4">
+        <!-- Check if user is logged in -->
+        {% if session.user_id %}
+            <!-- If logged in, show appropriate home button -->
+            {% if session.user_type == "highschool" %}
+                <a href="/hs_home" class="btn btn-primary btn-lg">Go to Home</a>
+            {% else %}
+                <a href="/college_home" class="btn btn-primary btn-lg">Go to Home</a>
+            {% endif %}
+        {% else %}
+            <!-- If not logged in, go to landing page -->
+            <a href="/" class="btn btn-primary btn-lg">Go to Home</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1>Upcoming Meetings</h1>
+    
+    <ul class="nav nav-tabs nav-fill mt-4 mb-4">
+        <li class="nav-item">
+            <a class="nav-link" href="/college_home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/college_meetings">Upcoming Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/college_requests">Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/college_past_meetings">Past Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-danger" href="/logout">Logout</a>
+        </li>
+    </ul>
+    
+    {% if meetings %}
+        <!-- Display meetings in a table for easy reading -->
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Student</th>
+                    <th>Date & Time</th>
+                    <th>Topic</th>
+                    <th>Meeting Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for meeting in meetings %}
+                <tr>
+                    <td>{{ meeting.student_name }}</td>
+                    <td>{{ meeting.meeting_date[:16] }}</td>
+                    <td>{{ meeting.message[:50] }}...</td>
+                    <td>
+                        <!-- Join Meeting button -->
+                        <a href="{{ meeting.meet_link }}" target="_blank" class="btn btn-sm btn-success me-2">
+                        Join Meeting
+                         </a>
+                    
+                        <!-- Mark Complete button -->
+                        <!-- EXPLANATION: This form submits a POST request to mark meeting complete
+                            onclick confirmation prevents accidental clicks
+                            style="display: inline" keeps button on same line -->
+                        <form method="post" action="/complete_meeting/{{ meeting.id }}" style="display: inline;">
+                            <button type="submit" class="btn btn-sm btn-secondary" 
+                                    onclick="return confirm('Mark this meeting as complete?')">
+                                ✓ Complete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">
+            No upcoming meetings scheduled.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

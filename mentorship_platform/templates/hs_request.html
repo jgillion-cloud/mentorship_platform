@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1>Send Request to {{ mentor.first_name }} {{ mentor.last_name }}</h1>
+    
+    <ul class="nav nav-tabs nav-fill mt-4 mb-4">
+        <li class="nav-item">
+            <a class="nav-link" href="/hs_home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/hs_browse">Browse Mentors</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/hs_past_meetings">Past Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-danger" href="/logout">Logout</a>
+        </li>
+    </ul>
+    
+    <!-- Show mentor info as a reminder -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Mentor Profile</h5>
+            <p>
+                <strong>Name:</strong> {{ mentor.first_name }} {{ mentor.last_name }}<br>
+                <strong>University:</strong> {{ mentor.university }}<br>
+                {% if mentor.help_areas %}
+                    <strong>Can help with:</strong> {{ mentor.help_areas.split(',') | join(', ') }}<br>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    
+    <!-- Request form -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Write Your Request</h5>
+                    
+                    <!-- method="post" sends data securely (not in URL) -->
+                    <form method="post">
+                        <!-- Message text area -->
+                        <div class="mb-3">
+                            <label for="message" class="form-label">
+                                What would you like to discuss?
+                            </label>
+                            <!-- EXPLANATION OF <textarea>: -->
+                            <!-- textarea is for multi-line text input -->
+                            <!-- rows="5" sets the height (5 lines tall) -->
+                            <!-- Different from <input> which is single-line -->
+                            <textarea class="form-control" id="message" name="message" 
+                                      rows="5" required
+                                      placeholder="Example: I'm having trouble deciding between colleges and would love to hear about your experience at your university..."></textarea>
+                            <small class="form-text text-muted">
+                                Be specific about what you need help with
+                            </small>
+                        </div>
+                        
+                        <!-- NEW: Availability field -->
+                        <div class="mb-3">
+                            <label for="availability" class="form-label">
+                                When are you available this week?
+                            </label>
+                            <!-- EXPLANATION: rows="3" makes it shorter than message box
+                                This is for quick availability notes -->
+                            <textarea class="form-control" id="availability" name="availability" 
+                                    rows="3" required
+                                    placeholder="Example: Monday 4-6pm, Wednesday after 3pm, Friday anytime"></textarea>
+                            <small class="form-text text-muted">
+                                List your available times this week so the mentor can choose a convenient slot
+                            </small>
+                        </div>
+
+                        <!-- Google Meet link input -->
+                        <div class="mb-3">
+                            <label for="meet_link" class="form-label">
+                                Google Meet Link
+                            </label>
+                            <input type="url" class="form-control" id="meet_link" 
+                                name="meet_link" required
+                                placeholder="https://meet.google.com/xxx-xxxx-xxx">
+                            <small class="form-text text-muted">
+                                Create a meeting at <a href="https://meet.google.com/new" target="_blank">meet.google.com/new</a>
+                            </small>
+                        </div>
+                        
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary w-100">
+                            Send Request
+                        </button>
+                    </form>
+                    
+                    <!-- Back button -->
+                    <a href="/hs_browse" class="btn btn-outline-secondary w-100 mt-2">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

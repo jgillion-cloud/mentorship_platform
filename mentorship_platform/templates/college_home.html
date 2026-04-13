@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container mt-4">
+    <!-- Welcome header with the student's first name -->
+    <h1>Welcome {{ first_name }}!</h1>
+    
+    <!-- Navigation tabs - large buttons to switch between pages -->
+    <ul class="nav nav-tabs nav-fill mt-4 mb-4">
+        <li class="nav-item">
+            <!-- 'active' class makes this tab highlighted since we're on home page -->
+            <a class="nav-link active" href="/college_home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/college_meetings">Upcoming Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/college_requests">Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/college_past_meetings">Past Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-danger" href="/logout">Logout</a>
+        </li>
+    </ul>
+    
+    <!-- Recent Requests Section -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h3>Recent Requests (Last 24 Hours)</h3>
+            <!-- Check if there are any recent requests -->
+            {% if recent_requests %}
+                <!-- Loop through each request and display it -->
+                <!-- 'for' loop in Jinja2 is like a for loop in Python -->
+                {% for request in recent_requests %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>{{ request.from_username }}</strong></h5>
+                            <p class="card-text">{{ request.message }}</p>
+                            
+                            <!-- NEW: Show availability on dashboard too -->
+                            <p class="card-text small">
+                                <strong>Available:</strong> 
+                                <span class="text-muted">{{ request.availability }}</span>
+                            </p>
+                            
+                            <a href="/college_requests" class="btn btn-sm btn-primary">View All Requests</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <!-- If no requests, show this message -->
+                <p class="text-muted">No recent requests</p>
+            {% endif %}
+        </div>
+        
+        <!-- Upcoming Meetings Section -->
+        <div class="col-md-6">
+            <h3>Upcoming Meetings</h3>
+            {% if upcoming_meetings %}
+                <!-- Table to display meetings in an organized way -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Date</th>
+                            <th>Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loop through each meeting -->
+                        {% for meeting in upcoming_meetings %}
+                            <tr>
+                                <td>{{ meeting.student_name }}</td>
+                                <!-- Display just the date/time, not the full timestamp -->
+                                <td>{{ meeting.meeting_date[:16] }}</td>
+                                <!-- Make the Google Meet link clickable -->
+                                <td><a href="{{ meeting.meet_link }}" target="_blank" class="btn btn-sm btn-success">Join</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-muted">No upcoming meetings</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

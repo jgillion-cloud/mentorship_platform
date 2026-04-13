@@ -1,0 +1,26 @@
+# EXPLANATION: .gitignore tells Git which files NOT to upload
+# These files should stay on your computer only
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Flask
+instance/
+.env
+flask_session/
+
+# Database (IMPORTANT!)
+# We DON'T upload the database with data
+# Render will create fresh database using setup_db.py
+mentorship.db
+
+# IDE
+.vscode/
+.DS_Store
+
+# Logs
+*.log

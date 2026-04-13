@@ -1,0 +1,286 @@
+/* EXPLANATION OF CSS:
+   CSS (Cascading Style Sheets) controls how HTML looks
+   Selector { property: value; } is the basic syntax
+   This file adds custom styling on top of Bootstrap */
+
+/* General body styling */
+body {
+    background-color: #f8f9fa;  /* Light gray background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-family sets the text font - these are "font stacks"
+       Browser tries first font, if not available tries next one */
+}
+
+/* EXPLANATION OF .container:
+   The . means "class selector" - targets elements with class="container"
+   This adds extra styling to Bootstrap's container */
+.container {
+    max-width: 1200px;  /* Limits width on large screens */
+    margin-top: 20px;
+}
+
+/* Custom styling for navigation tabs */
+.nav-tabs {
+    border-bottom: 3px solid #dee2e6;
+    margin-bottom: 30px;
+}
+
+/* EXPLANATION OF .nav-tabs .nav-link:
+   This is a "descendant selector" - targets nav-link INSIDE nav-tabs
+   Space between selectors means "inside of" */
+.nav-tabs .nav-link {
+    color: #495057;  /* Dark gray text */
+    font-weight: 500;  /* Medium bold */
+    padding: 12px 20px;  /* Internal spacing: 12px top/bottom, 20px left/right */
+    border: none;
+    transition: all 0.3s ease;  /* Smooth animation when hovering */
+    /* EXPLANATION OF transition:
+       Makes changes animate smoothly over 0.3 seconds
+       "all" means animate all property changes
+       "ease" is the animation curve (starts slow, speeds up, slows down) */
+}
+
+/* EXPLANATION OF :hover pseudo-class:
+   Applies styles when mouse hovers over element
+   This is CSS, not something you control in Python/Flask */
+.nav-tabs .nav-link:hover {
+    background-color: #e9ecef;  /* Light gray on hover */
+    border-radius: 5px 5px 0 0;  /* Rounded top corners */
+}
+
+/* Active tab styling */
+.nav-tabs .nav-link.active {
+    color: #0d6efd;  /* Bootstrap blue */
+    font-weight: 600;  /* Bolder */
+    border-bottom: 3px solid #0d6efd;  /* Blue underline */
+}
+
+/* Card enhancements */
+.card {
+    border: none;  /* Remove default border */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);  /* Subtle shadow */
+    /* EXPLANATION OF box-shadow:
+       Creates a drop shadow effect
+       0 = horizontal offset, 2px = vertical offset (shadow below)
+       8px = blur radius (how blurry), rgba = color with transparency
+       rgba(0,0,0,0.1) = black with 10% opacity */
+    border-radius: 8px;  /* Rounded corners */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* When card changes, animate smoothly */
+}
+
+/* Card hover effect - lifts up slightly */
+.card:hover {
+    transform: translateY(-5px);  /* Move up 5 pixels */
+    /* EXPLANATION OF transform:
+       Changes element's position/size/rotation without affecting layout
+       translateY(-5px) moves element up (negative = up, positive = down) */
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);  /* Bigger shadow when hovering */
+}
+
+/* Table styling improvements */
+.table {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;  /* Keeps rounded corners */
+    /* EXPLANATION of overflow:
+       Controls what happens to content that's too big
+       "hidden" clips content at edges (needed for rounded corners) */
+}
+
+/* Striped table rows - different color for even rows */
+.table-striped tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* EXPLANATION OF :nth-child(even):
+   This is a CSS pseudo-class that selects every even-numbered child
+   even = 2nd, 4th, 6th rows, etc.
+   Could also use :nth-child(odd) for odd rows
+   Could use :nth-child(3) for exactly the 3rd child */
+
+/* Table header styling */
+.table thead th {
+    background-color: #0d6efd;  /* Blue background */
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 15px;
+}
+
+/* Button enhancements */
+.btn {
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+/* Primary button (blue) hover effect */
+.btn-primary:hover {
+    background-color: #0b5ed7;  /* Darker blue */
+    transform: translateY(-2px);  /* Lift slightly */
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);  /* Blue shadow */
+}
+
+/* Success button (green) hover effect */
+.btn-success:hover {
+    background-color: #198754;
+    transform: translateY(-2px);
+}
+
+/* Danger button (red) hover effect */
+.btn-danger:hover {
+    background-color: #bb2d3b;
+    transform: translateY(-2px);
+}
+
+/* Welcome header styling */
+h1 {
+    color: #212529;  /* Very dark gray (almost black) */
+    font-weight: 700;  /* Bold */
+    margin-bottom: 20px;
+    /* EXPLANATION OF margin vs padding:
+       margin = space OUTSIDE element (pushes other elements away)
+       padding = space INSIDE element (pushes content away from edges) */
+}
+
+/* Subheader styling */
+h3 {
+    color: #495057;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* Badge enhancements (for International, Athlete, LGBTQ+ tags) */
+.badge {
+    padding: 6px 12px;
+    font-size: 0.85rem;  /* rem = relative to root font size */
+    /* EXPLANATION OF font-size units:
+       px = pixels (fixed size)
+       rem = relative to <html> font size (more flexible)
+       em = relative to parent font size
+       % = percentage of parent */
+    font-weight: 500;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/* Alert message styling */
+.alert {
+    border-radius: 8px;
+    border: none;
+    padding: 15px 20px;
+}
+
+/* Form input enhancements */
+.form-control, .form-select {
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    padding: 10px 15px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* EXPLANATION OF :focus pseudo-class:
+   Applies when element is clicked/selected (has keyboard focus)
+   Important for accessibility and user experience */
+.form-control:focus, .form-select:focus {
+    border-color: #0d6efd;  /* Blue border */
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);  /* Blue glow */
+    /* EXPLANATION of this box-shadow:
+       0 0 0 = no offset, no blur
+       0.2rem = spread radius (how far shadow extends)
+       Creates a "glow" effect around the input */
+}
+
+/* Form label styling */
+.form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+/* Landing page specific styles */
+.border-end {
+    border-right: 3px solid #dee2e6 !important;
+    /* EXPLANATION of !important:
+       Forces this rule to override other conflicting rules
+       Use sparingly - it's like shouting in CSS
+       Here it ensures the border shows up even if Bootstrap tries to override */
+}
+
+/* Card title in mentor cards */
+.card-title {
+    color: #0d6efd;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Small text inside cards */
+.card-text small {
+    color: #6c757d;  /* Medium gray */
+    line-height: 1.6;  /* Space between lines of text */
+    /* EXPLANATION of line-height:
+       Controls spacing between lines
+       1.6 = 1.6 times the font size
+       Makes text easier to read */
+}
+
+/* Search/filter card styling */
+.card .card-body h5 {
+    color: #212529;
+    margin-bottom: 20px;
+}
+
+/* Responsive adjustments for mobile */
+/* EXPLANATION OF @media queries:
+   Allows different styles for different screen sizes
+   This is how websites adapt to phones/tablets/desktops
+   max-width: 768px means "apply these styles on screens 768px or smaller" */
+@media (max-width: 768px) {
+    .nav-tabs .nav-link {
+        font-size: 0.9rem;  /* Smaller text on mobile */
+        padding: 10px 12px;  /* Less padding on mobile */
+    }
+    
+    h1 {
+        font-size: 1.75rem;  /* Smaller heading on mobile */
+    }
+    
+    .container {
+        margin-top: 10px;
+    }
+}
+
+/* Loading animation (optional enhancement) */
+/* EXPLANATION OF @keyframes:
+   Defines an animation that can be reused
+   You specify what happens at different points (0%, 50%, 100%)
+   Then apply it to elements with the animation property */
+@keyframes fadeIn {
+    from {
+        opacity: 0;  /* Start invisible */
+        transform: translateY(20px);  /* Start 20px down */
+    }
+    to {
+        opacity: 1;  /* End fully visible */
+        transform: translateY(0);  /* End at normal position */
+    }
+}
+
+/* Apply fade-in animation to cards */
+.card {
+    animation: fadeIn 0.5s ease;
+    /* EXPLANATION:
+       fadeIn = name of animation (defined above)
+       0.5s = duration (half a second)
+       ease = timing function (smooth acceleration/deceleration) */
+}
+
+/* Mentor count badge */
+h3 .badge {
+    font-size: 0.7em;  /* em = relative to parent (h3) font size */
+    vertical-align: middle;  /* Aligns with middle of text line */
+}

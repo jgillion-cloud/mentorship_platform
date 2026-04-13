@@ -1,0 +1,174 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container mt-4">
+    <ul class="nav nav-tabs nav-fill mt-4 mb-4">
+        <li class="nav-item">
+            <a class="nav-link" href="/hs_home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/hs_browse">Browse Mentors</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/hs_past_meetings">Past Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-danger" href="/logout">Logout</a>
+        </li>
+    </ul>
+    
+    <!-- Back button -->
+    <a href="/hs_browse" class="btn btn-outline-secondary mb-3">
+        <!-- EXPLANATION OF → character:
+             This is a Unicode arrow character
+             You can use Unicode characters directly in HTML
+             Other useful ones: ← ↑ ↓ ✓ ✗ ★ ❤ -->
+        ← Back to Browse
+    </a>
+    
+    <!-- Mentor Profile Card -->
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <!-- Name as header -->
+                <h2 class="card-title text-center mb-4">
+                    {{ mentor.first_name }} {{ mentor.last_name }}
+                </h2>
+                
+                <!-- Basic Information -->
+                <div class="mb-4">
+                    <h5 class="text-primary">Basic Information</h5>
+                    <hr>
+                    <p><strong>University:</strong> {{ mentor.university }}</p>
+                    
+                    <!-- CHANGED: high_school instead of hometown -->
+                    {% if mentor.high_school %}
+                        <p><strong>High School:</strong> {{ mentor.high_school }}</p>
+                    {% endif %}
+                </div>
+                
+                <!-- What they can help with -->
+                {% if mentor.help_areas %}
+                    <div class="mb-4">
+                        <h5 class="text-primary">Can Help With</h5>
+                        <hr>
+                        <ul>
+                            {% for area in mentor.help_areas.split(',') %}
+                                <li>{{ area }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                <!-- Academic Interests -->
+                {% if mentor.academic_interests %}
+                    <div class="mb-4">
+                        <h5 class="text-primary">Academic Interests</h5>
+                        <hr>
+                        <div>
+                            <!-- EXPLANATION: Display as badges for visual organization -->
+                            {% for interest in mentor.academic_interests.split(',') %}
+                                <span class="badge bg-secondary me-1 mb-1">{{ interest }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- NEW: Athletic Interests Section -->
+                {% if mentor.athletic_interests %}
+                    <div class="mb-4">
+                        <h5 class="text-primary">Athletic & Physical Activities</h5>
+                        <hr>
+                        <div>
+                            {% for sport in mentor.athletic_interests.split(',') %}
+                                <span class="badge bg-secondary me-1 mb-1">{{ sport }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Demographics (Only show if provided) -->
+                <!-- EXPLANATION: We check each field individually
+                     Only display sections where mentor shared information -->
+                {% if mentor.gender or mentor.race or mentor.hbcu or mentor.ib or mentor.is_athlete or mentor.is_lgbtq or mentor.religion %}
+                    <div class="mb-4">
+                        <h5 class="text-primary">Background & Experience</h5>
+                        <hr>
+                        
+                        <!-- Gender (only if shared) -->
+                        {% if mentor.gender %}
+                            <p>
+                                <strong>Gender Identity:</strong> 
+                                <!-- EXPLANATION: If "Other" is selected, only show custom text
+                                    Otherwise show all selected genders -->
+                                {% if "Other" in mentor.gender.split(',') and mentor.gender_custom %}
+                                    {{ mentor.gender_custom }}
+                                {% else %}
+                                    {{ mentor.gender.split(',') | join(', ') }}
+                                    {% if mentor.gender_custom %}
+                                        ({{ mentor.gender_custom }})
+                                    {% endif %}
+                                {% endif %}
+                            </p>
+                        {% endif %}
+                        
+                        <!-- Race (only if shared) -->
+                        {% if mentor.race %}
+                            <p><strong>Race/Ethnicity:</strong> {{ mentor.race.split(',') | join(', ') }}</p>
+                        {% endif %}
+                        
+                        <!-- Religion (only if shared) -->
+                        {% if mentor.religion %}
+                            <p><strong>Religion:</strong> {{ mentor.religion }}</p>
+                        {% endif %}
+                        
+                        <!-- Special attributes as badges -->
+                        <div class="mt-3">
+                            {% if mentor.hbcu %}
+                                <span class="badge" style="background-color: #e7d4f8; color: #5a2d82;">
+                                    HBCU Graduate
+                                </span>
+                            {% endif %}
+                            {% if mentor.ib %}
+                                <span class="badge" style="background-color: #d1e7dd; color: #0a3622;">
+                                    IB Program
+                                </span>
+                            {% endif %}
+                            {% if mentor.university_outside_us %}
+                                <span class="badge" style="background-color: #cfe2ff; color: #084298;">International University</span>
+                            {% endif %}
+                            {% if mentor.is_athlete %}
+                                <span class="badge" style="background-color: #d1e7dd; color: #0a3622;">
+                                    College Athlete
+                                </span>
+                            {% endif %}
+                            {% if mentor.is_lgbtq %}
+                                <span class="badge" style="background-color: #fff3cd; color: #664d03;">
+                                    LGBTQ+
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Request Button -->
+                <div class="text-center mt-4">
+                    {% if has_pending %}
+                        <button class="btn btn-secondary btn-lg" disabled>
+                            Request Already Sent
+                        </button>
+                        <p class="text-muted mt-2">
+                            <small>You have a pending request to this mentor</small>
+                        </p>
+                    {% else %}
+                        <a href="/hs_request/{{ mentor.user_id }}" class="btn btn-primary btn-lg">
+                            Send Request
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

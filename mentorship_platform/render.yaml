@@ -1,0 +1,30 @@
+# EXPLANATION: This file tells Render how to deploy your app
+# YAML is a configuration format (like JSON but easier to read)
+# Indentation matters in YAML!
+
+services:
+  # Define a web service
+  - type: web
+    # Name of your app on Render
+    name: tapin
+    # Runtime environment
+    env: python
+    # Where your code is (current directory)
+    buildCommand: "pip install -r requirements.txt && python setup_db.py"
+    # EXPLANATION: buildCommand runs when deploying
+    # && means "and then" (run setup_db.py after installing packages)
+    
+    # Command to start your app
+    startCommand: "gunicorn app:app"
+    # EXPLANATION: gunicorn is the production server
+    # app:app means "run the 'app' variable from 'app.py'"
+    
+    # What plan to use
+    plan: free
+    # EXPLANATION: free tier - $0/month
+    
+    # Environment variables
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      # EXPLANATION: Tells Render to use Python 3.9

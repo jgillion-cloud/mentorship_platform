@@ -1,0 +1,276 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1>Browse Mentors</h1>
+    
+    <ul class="nav nav-tabs nav-fill mt-4 mb-4">
+        <li class="nav-item">
+            <a class="nav-link" href="/hs_home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/hs_browse">Browse Mentors</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/hs_past_meetings">Past Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-danger" href="/logout">Logout</a>
+        </li>
+    </ul>
+    
+    <!-- Search and Filter Form -->
+    <!-- EXPLANATION: method="get" puts form data in URL parameters -->
+    <!-- This is different from method="post" which hides data -->
+    <!-- We use GET here so filters appear in URL and can be bookmarked -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Search & Filter</h5>
+            <form method="get">
+                <div class="row">
+                    <!-- Search by name input -->
+                    <div class="col-md-4 mb-3">
+                        <label for="search" class="form-label">Search Name</label>
+                        <!-- value="{{ search_name }}" keeps the search term visible -->
+                        <!-- This is important for user experience -->
+                        <input type="text" class="form-control" id="search" 
+                               name="search" placeholder="First or Last Name"
+                               value="{{ search_name }}">
+                    </div>
+                    
+                    <!-- Filter by what help they offer -->
+                    <div class="col-md-4 mb-3">
+                        <label for="help_area" class="form-label">Help Needed</label>
+                        <select class="form-select" id="help_area" name="help_area">
+                            <option value="">All</option>
+                            <!-- CHANGED: New help area options -->
+                            <option value="College Applications" 
+                                    {% if help_filter == "College Applications" %}selected{% endif %}>
+                                    College Applications
+                            </option>
+                            <option value="Understanding Financial Aid"
+                                    {% if help_filter == "Understanding Financial Aid" %}selected{% endif %}>
+                                Understanding Financial Aid
+                            </option>
+                            <option value="Scholarship Searching"
+                                    {% if help_filter == "Scholarship Searching" %}selected{% endif %}>
+                                        Scholarship Searching
+                            </option>
+                            <option value="College Classes and Majors"
+                                    {% if help_filter == "College Classes and Majors" %}selected{% endif %}>
+                                College Classes and Majors
+                            </option>
+                            <option value="Exploring Universities"
+                                    {% if help_filter == "Exploring Universities" %}selected{% endif %}>
+                                    Exploring Universities
+                            </option>
+                            <option value="Deciding Between Universities"
+                                    {% if help_filter == "Deciding Between Universities" %}selected{% endif %}>
+                                Deciding Between Universities
+                            </option>
+                            <option value="College Social Life"
+                                {% if help_filter == "College Social Life" %}selected{% endif %}>
+                                    College Social Life
+                            </option>
+                            </select>
+                    </div>
+                   
+                    <!-- Filter by academic interests -->
+                    <div class="col-md-4 mb-3">
+                        <label for="interest" class="form-label">Academic Interest</label>
+                        <select class="form-select" id="interest" name="interest">
+                            <option value="">All</option>
+                            <optgroup label="STEM">
+                                <option value="Engineering / Robotics" {% if interest_filter == "Engineering / Robotics" %}selected{% endif %}>Engineering / Robotics</option>
+                                <option value="Mathematics" {% if interest_filter == "Mathematics" %}selected{% endif %}>Mathematics</option>
+                                <option value="Physics" {% if interest_filter == "Physics" %}selected{% endif %}>Physics</option>
+                                <option value="Computer Science" {% if interest_filter == "Computer Science" %}selected{% endif %}>Computer Science</option>
+                            </optgroup>
+                            <optgroup label="Life Sciences">
+                                <option value="Biology" {% if interest_filter == "Biology" %}selected{% endif %}>Biology</option>
+                                <option value="Chemistry" {% if interest_filter == "Chemistry" %}selected{% endif %}>Chemistry</option>
+                                <option value="Environmental Science" {% if interest_filter == "Environmental Science" %}selected{% endif %}>Environmental Science</option>
+                            </optgroup>
+                            <optgroup label="Social Sciences">
+                                <option value="Politics" {% if interest_filter == "Politics" %}selected{% endif %}>Politics</option>
+                                <option value="Psychology" {% if interest_filter == "Psychology" %}selected{% endif %}>Psychology</option>
+                                <option value="Law" {% if interest_filter == "Law" %}selected{% endif %}>Law</option>
+                                <option value="Social Justice" {% if interest_filter == "Social Justice" %}selected{% endif %}>Social Justice</option>
+                                <!-- ADDED: Social Justice -->
+                            </optgroup>
+                            <optgroup label="Humanities">
+                                <!-- ADDED: Humanities section -->
+                                <option value="English Literature" {% if interest_filter == "English Literature" %}selected{% endif %}>English Literature</option>
+                                <option value="History" {% if interest_filter == "History" %}selected{% endif %}>History</option>
+                            </optgroup>
+                            <optgroup label="Arts">
+                                <option value="Art" {% if interest_filter == "Art" %}selected{% endif %}>Art</option>
+                                <option value="Music" {% if interest_filter == "Music" %}selected{% endif %}>Music</option>
+                                <option value="Theater/Film" {% if interest_filter == "Theater/Film" %}selected{% endif %}>Theater/Film</option>
+                            </optgroup>
+                            <optgroup label="Business">
+                                <option value="Economics/Finance" {% if interest_filter == "Economics/Finance" %}selected{% endif %}>Economics/Finance</option>
+                                <!-- REMOVED: Business Management to save space -->
+                            </optgroup>
+                            <optgroup label="Other">
+                                <option value="Education" {% if interest_filter == "Education" %}selected{% endif %}>Education</option>
+                                <option value="Military Service" {% if interest_filter == "Military Service" %}selected{% endif %}>Military Service</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                
+                <div class="row">
+                    <!-- Filter by gender -->
+                    <div class="col-md-4 mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select class="form-select" id="gender" name="gender">
+                            <option value="">All</option>
+                            <option value="Man" {% if gender_filter == "Man" %}selected{% endif %}>Man</option>
+                            <option value="Woman" {% if gender_filter == "Woman" %}selected{% endif %}>Woman</option>
+                            <option value="Nonbinary" {% if gender_filter == "Nonbinary" %}selected{% endif %}>Nonbinary</option>
+                            <option value="Transgender" {% if gender_filter == "Transgender" %}selected{% endif %}>Transgender</option>
+                            <!-- ADDED: Nonbinary and Transgender -->
+                            <!-- REMOVED: "Other" option -->
+                        </select>
+                    </div>
+                    
+                    <!-- Filter by Athletic Interest -->
+                    <div class="col-md-4 mb-3">
+                        <label for="athletic" class="form-label">Athletic Interest</label>
+                        <!-- EXPLANATION: New filter - lets students find mentors with specific sports -->
+                        <select class="form-select" id="athletic" name="athletic">
+                            <option value="">All</option>
+                            <option value="Basketball" {% if athletic_filter == "Basketball" %}selected{% endif %}>Basketball</option>
+                            <option value="Soccer" {% if athletic_filter == "Soccer" %}selected{% endif %}>Soccer</option>
+                            <option value="Volleyball" {% if athletic_filter == "Volleyball" %}selected{% endif %}>Volleyball</option>
+                            <option value="Baseball" {% if athletic_filter == "Baseball" %}selected{% endif %}>Baseball</option>
+                            <option value="Softball" {% if athletic_filter == "Softball" %}selected{% endif %}>Softball</option>
+                            <option value="Football" {% if athletic_filter == "Football" %}selected{% endif %}>Football</option>
+                            <option value="Track & Field/Cross Country" {% if athletic_filter == "Track & Field/Cross Country" %}selected{% endif %}>Track & Field/Cross Country</option>
+                            <option value="Swimming" {% if athletic_filter == "Swimming" %}selected{% endif %}>Swimming</option>
+                            <option value="Tennis" {% if athletic_filter == "Tennis" %}selected{% endif %}>Tennis</option>
+                            <option value="Wrestling" {% if athletic_filter == "Wrestling" %}selected{% endif %}>Wrestling</option>
+                            <option value="Dance" {% if athletic_filter == "Dance" %}selected{% endif %}>Dance</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Submit button and clear filters link -->
+                    <div class="col-md-4 mb-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary me-2">Apply Filters</button>
+                        <!-- Clicking this goes to /hs_browse with no parameters (clears filters) -->
+                        <a href="/hs_browse" class="btn btn-outline-secondary">Clear</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Display Mentors -->
+    <h3>Available Mentors ({{ mentors|length }})</h3>
+
+    {% if mentors %}
+        <div class="row">
+            <!-- Loop through each mentor -->
+            {% for mentor in mentors %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ mentor.first_name }} {{ mentor.last_name }}
+                            </h5>
+                        
+                            <p class="card-text">
+                                <strong>University:</strong> {{ mentor.university }}<br>
+                            
+                                <!-- CHANGED: Show high_school instead of hometown -->
+                                {% if mentor.high_school %}
+                                    <strong>High School:</strong> {{ mentor.high_school }}<br>
+                                {% endif %}
+                            
+                                <!-- Display help areas if they exist -->
+                                {% if mentor.help_areas %}
+                                    <strong>Can Help With:</strong><br>
+                                    <small>{{ mentor.help_areas.split(',') | join(', ') }}</small><br>
+                                {% endif %}
+                            
+                                <!-- Display academic interests -->
+                                {% if mentor.academic_interests %}
+                                    <strong>Academic Interests:</strong><br>
+                                    <small>{{ mentor.academic_interests.split(',')[:3] | join(', ') }}
+                                    {% if mentor.academic_interests.split(',')|length > 3 %}
+                                        + {{ mentor.academic_interests.split(',')|length - 3 }} more
+                                    {% endif %}
+                                    </small><br>
+                                    <!-- EXPLANATION: [:3] shows only first 3 interests
+                                        "+ X more" tells user there are additional interests
+                                        This prevents cards from getting too tall -->
+                                {% endif %}
+                            
+                                <!-- NEW: Display athletic interests -->
+                                {% if mentor.athletic_interests %}
+                                    <strong>Athletic Interests:</strong><br>
+                                    <small>{{ mentor.athletic_interests.split(',')[:3] | join(', ') }}
+                                    {% if mentor.athletic_interests.split(',')|length > 3 %}
+                                        + {{ mentor.athletic_interests.split(',')|length - 3 }} more
+                                    {% endif %}
+                                    </small><br>
+                                {% endif %}
+                            
+                                <!-- Display gender (only if not "Prefer not to say") -->
+                                {% if mentor.gender %}
+                                    <strong>Gender:</strong> 
+                                    {% if "Other" in mentor.gender.split(',') and mentor.gender_custom %}
+                                        {{ mentor.gender_custom }}
+                                    {% else %}
+                                        {{ mentor.gender.split(',') | join(', ') }}
+                                        {% if mentor.gender_custom %}
+                                            ({{ mentor.gender_custom }})
+                                        {% endif %}
+                                    {% endif %}
+                                    <br>
+                                    <!-- EXPLANATION: Shows all selected genders
+                                        If they typed custom gender, shows that too in parentheses -->
+                                {% endif %}
+                            
+                                <!-- Display race (only if not "Prefer not to say") -->
+                                {% if mentor.race %}
+                                    <strong>Race/Ethnicity:</strong> {{ mentor.race.split(',') | join(', ') }}<br>
+                                {% endif %}
+                            
+                                <!-- Display badges for special attributes -->
+                                <div class="mt-2">
+                                    {% if mentor.hbcu %}
+                                        <span class="badge" style="background-color: #e7d4f8; color: #5a2d82;">HBCU</span>
+                                    {% endif %}
+                                    {% if mentor.ib %}
+                                        <!-- CHANGED: Blue color for IB -->
+                                        <span class="badge" style="background-color: #cfe2ff; color: #084298;">IB Program</span>
+                                    {% endif %}
+                                    {% if mentor.university_outside_us %}
+                                        <span class="badge" style="background-color: #f8d7da; color: #842029;">International University</span>
+                                    {% endif %}
+                                    {% if mentor.is_athlete %}
+                                        <!-- CHANGED: Orange color for Athlete (different from IB) -->
+                                        <span class="badge" style="background-color: #fff3cd; color: #856404;">College Athlete</span>
+                                    {% endif %}
+                                    {% if mentor.is_lgbtq %}
+                                        <span class="badge" style="background-color: #d1ecf1; color: #0c5460;">LGBTQ+</span>
+                                    {% endif %}
+                                </div>
+                            </p>
+                        
+                            <!-- View Profile button -->
+                            <a href="/hs_view_profile/{{ mentor.user_id }}" 
+                            class="btn btn-primary w-100 mt-2">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No mentors match your search criteria. Try adjusting your filters.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

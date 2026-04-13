@@ -1,0 +1,53 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 334-688-522
+127.0.0.1 - - [05/Dec/2025 18:34:04] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:34:32] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:34:32] "GET /static/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:34:46] "[33mGET /login?type=college HTTP/1.1[0m" 404 -
+127.0.0.1 - - [05/Dec/2025 18:34:48] "GET /register_college HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:34:48] "GET /static/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:34:59] "GET /register_hs HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:34:59] "GET /static/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:35:21] "GET /register_college HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:35:21] "GET /static/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:40:12] "GET /register_college HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 18:40:12] "GET /static/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 20:37:52] "[35m[1mPOST /register_college HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/jadeng/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/Users/jadeng/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+  File "/Users/jadeng/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/jadeng/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/jadeng/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/jadeng/Library/Python/3.9/lib/python/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/jadeng/myproject/mentorship_platform/mentorship_platform/app.py", line 130, in register_college
+    password_hash = generate_password_hash(password)
+  File "/Users/jadeng/Library/Python/3.9/lib/python/site-packages/werkzeug/security.py", line 116, in generate_password_hash
+    h, actual_method = _hash_internal(method, salt, password)
+  File "/Users/jadeng/Library/Python/3.9/lib/python/site-packages/werkzeug/security.py", line 51, in _hash_internal
+    hashlib.scrypt(
+AttributeError: module 'hashlib' has no attribute 'scrypt'
+127.0.0.1 - - [05/Dec/2025 20:37:52] "GET /register_college?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 20:37:52] "GET /register_college?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 20:37:52] "GET /register_college?__debugger__=yes&cmd=resource&f=console.png&s=sTquBoQpSMSVml5w242d HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 20:37:52] "GET /register_college?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 20:38:57] "POST /register_college HTTP/1.1" 200 -
+127.0.0.1 - - [05/Dec/2025 20:38:57] "GET /static/styles.css HTTP/1.1" 200 -
+ * Detected change in '/Users/jadeng/Library/Python/3.9/lib/python/site-packages/werkzeug/routing/__init__.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 334-688-522
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

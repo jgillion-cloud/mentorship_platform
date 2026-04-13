@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block main %}
+<div class="container mt-4">
+    <h1>Past Meetings</h1>
+    
+    <ul class="nav nav-tabs nav-fill mt-4 mb-4">
+        <li class="nav-item">
+            <a class="nav-link" href="/college_home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/college_meetings">Upcoming Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/college_requests">Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="/college_past_meetings">Past Meetings</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-danger" href="/logout">Logout</a>
+        </li>
+    </ul>
+    
+    {% if meetings %}
+        <table class="table table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Student</th>
+                    <th>Date</th>
+                    <th>Topic</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for meeting in meetings %}
+                    <tr>
+                        <td>{{ meeting.student_name }}</td>
+                        <td>{{ meeting.meeting_date[:16] }}</td>
+                        <td>{{ meeting.message }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">
+            No past meetings yet.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
