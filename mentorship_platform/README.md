@@ -1,7 +1,7 @@
 PLEASE PLEASE PLEASE WATCH VIDEO:
 Here’s the youtube link: https://youtu.be/4OBVj93T5O8 
 
-HOW TO USE FOR DUMBBIES LIKE ME: 
+HOW TO USE (This is a very informal tutorial!):
 
 There are two types of people looking to use the platform: high school students learning from others and college students looking to help out. For purposes of exploring all the functions my website has to offer you will be playing both actors. Follow the instructions below. 
 
